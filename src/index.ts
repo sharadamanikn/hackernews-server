@@ -1,10 +1,11 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import "dotenv/config";
-import { jwtSecretKey } from '../environment';
-const app = new Hono()
-import jwt from "jsonwebtoken";
+//import { jwtSecretKey } from '../environment';
+//const app = new Hono()
+//import jwt from "jsonwebtoken";
 import { allRoutes } from "./routes/routes";
+
 //console.log("JWT Secret Key:", jwtSecretKey);
 
 
