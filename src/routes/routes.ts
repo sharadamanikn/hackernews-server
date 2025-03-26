@@ -10,11 +10,3 @@ allRoutes.use(logger());
 allRoutes.route("/auth", authenticationRoutes);
 allRoutes.route("/users", usersRoutes);
 
-allRoutes.get("/health", (context) => {
-  return context.json(
-    {
-      message: "All Ok",
-    },
-    200
-  );
-});
