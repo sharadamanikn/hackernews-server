@@ -6,5 +6,5 @@ export type createPostResult = {
 }
 export enum createPostError {
     BAD_REQUEST="BAD_REQUEST",
-    USER_NOT_FOUND = "USER_NOT_FOUND",
+    SERVER_ERROR="SERVER_ERROR",
 }
