@@ -1,9 +1,11 @@
 import type { Post, User } from "@prisma/client";export type CreatePostParameters = {
     title: string;
     content: string;
-  };export type CreatePostResult = {
+  };
+  export type CreatePostResult = {
     post: Post;
-  };export enum CreatePostError {
+  };
+  export enum CreatePostError {
     UNAUTHORIZED = "UNAUTHORIZED",
     UNKNOWN = "UNKNOWN"
   }export type GetPostsResult = {
