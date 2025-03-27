@@ -12,3 +12,4 @@ allRoutes.route("/auth", authenticationRoutes);
 allRoutes.route("/users", usersRoutes);
 allRoutes.route("/posts", postsRoutes);
 
+
