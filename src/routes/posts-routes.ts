@@ -12,6 +12,8 @@ import {
   GetPostsError,
   DeletePostError
 } from "../controllers/posts/posts-types";export const postsRoutes = new Hono();// GET all posts
+
+
 postsRoutes.get("", tokenMiddleware, async (context) => {
   try {
     const page = parseInt(context.req.query("page") || "1", 10);
@@ -70,7 +72,10 @@ postsRoutes.get("/me", tokenMiddleware, async (context) => {
       500
     );
   }
-});// CREATE a post
+});
+
+
+// CREATE a post
 postsRoutes.post("", tokenMiddleware, async (context) => {
   try {
     const userId = context.get("userId");
