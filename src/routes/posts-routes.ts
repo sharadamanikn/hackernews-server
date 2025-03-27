@@ -11,7 +11,9 @@ import {
   CreatePostError,
   GetPostsError,
   DeletePostError
-} from "../controllers/posts/posts-types";export const postsRoutes = new Hono();// GET all posts
+} from "../controllers/posts/posts-types";
+
+export const postsRoutes = new Hono();
 
 
 postsRoutes.get("", tokenMiddleware, async (context) => {
