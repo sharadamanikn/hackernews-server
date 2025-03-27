@@ -4,21 +4,6 @@
 
 This project replicates the core features of the "Hacker News" platform, implementing authentication, user management, posts, likes, and comments.
 
-## Installation & Setup
-
-To set up and run the project, follow these steps:
-
-```sh
-npm install
-npm run dev
-```
-
-Once the server is running, open:
-
-```
-http://localhost:3000
-```
-
 ## Entities
 The project includes the following entities:
 
