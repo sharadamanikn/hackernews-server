@@ -1,9 +1,7 @@
 import { prismaClient } from "../../extras/prisma";
-import {
-  type CreatePostParameters, //getting error in this line
-  type CreatePostResult, //getting error in this line
-  CreatePostError,
-  type GetPostsResult,//getting error in this line
+import { type CreatePostParameters, 
+  type CreatePostResult,   CreatePostError,
+  type GetPostsResult,
   GetPostsError,
   DeletePostError
 } from "./posts-types";
@@ -106,4 +104,5 @@ export const getAllPosts = async (
     console.error("Error deleting post:", error);
     throw DeletePostError.UNKNOWN;
   }
+
 };
