@@ -17,6 +17,6 @@ postsRoutes.post("/", tokenMiddleware, async (c) => {
     
         return c.json(newPost, 201); 
       } catch (error) {
-        return c.json({ message: "Server Error" }, 400);
+        return c.json({ message: createPostError.SERVER_ERROR }, 400);
       }
 });
