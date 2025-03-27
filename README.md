@@ -48,9 +48,5 @@ The project includes the following entities:
 - `POST /likes/on/:postId` - Creates a like on a post (only one like per user per post)
 - `DELETE /likes/on/:postId` - Deletes a like (if owned by the current user)
 
-### Comments
-- `GET /comments/on/:postId` - Returns all comments on a post (reverse chronological order, paginated)
-- `POST /comments/on/:postId` - Creates a comment on a post
-- `DELETE /comments/:commentId` - Deletes a comment (if owned by the current user)
-- `PATCH /comments/:commentId` - Updates a comment's text (if owned by the current user)
+
 
