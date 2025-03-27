@@ -6,7 +6,10 @@ import {
   type GetPostsResult,//getting error in this line
   GetPostsError,
   DeletePostError
-} from "./posts-types";export const createPost = async (
+} from "./posts-types";
+
+
+export const createPost = async (
   parameters: CreatePostParameters & { authorId: string }
 ): Promise<CreatePostResult> => {
   try {
@@ -21,7 +24,10 @@ import {
     console.error("Error creating post:", error);
     throw CreatePostError.UNKNOWN;
   }
-};export const getAllPosts = async (
+};
+
+
+export const getAllPosts = async (
   page: number = 1,
   limit: number = 10
 ): Promise<GetPostsResult> => {
