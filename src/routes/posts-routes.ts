@@ -19,11 +19,13 @@ export const postsRoutes = new Hono();
 postsRoutes.get("", tokenMiddleware, async (context) => {
   try {
     const page = parseInt(context.req.query("page") || "1", 10);
-    const limit = parseInt(context.req.query("limit") || "10", 10);    if (page < 1 || limit < 1) {
+    const limit = parseInt(context.req.query("limit") || "10", 10);    
+    if (page < 1 || limit < 1) {
       return context.json({
         message: "Invalid page or limit"
       }, 400);
-    }    const posts = await getAllPosts(page, limit);    return context.json(
+    }    const posts = await getAllPosts(page, limit);    
+    return context.json(
       {
         data: posts,
       },
