@@ -1,6 +1,5 @@
 import { createHash } from "crypto";
-import { LogInWtihUsernameAndPasswordError,
-  SignUpWithUsernameAndPasswordError,
+import { LogInWtihUsernameAndPasswordError, SignUpWithUsernameAndPasswordError,
   type LogInWithUsernameAndPasswordResult,
   type SignUpWithUsernameAndPasswordResult,
 } from "./authentication-types";
@@ -11,54 +10,46 @@ import { jwtSecretKey } from "../../../environment";
 export const signUpWithUsernameAndPassword = async (parameters: {
   username: string;
   password: string;
-}): Promise<SignUpWithUsernameAndPasswordResult> => {
+  }): Promise<SignUpWithUsernameAndPasswordResult> => {
   const isUserExistingAlready = await checkIfUserExistsAlready({
     username: parameters.username,
   });
-
   if (isUserExistingAlready) {
     throw SignUpWithUsernameAndPasswordError.CONFLICTING_USERNAME;
   }
-
   const passwordHash = createPasswordHash({
     password: parameters.password,
   });
-
   const user = await prismaClient.user.create({
     data: {
       username: parameters.username,
       password: passwordHash,
     },
   });
-
   const token = createJWToken({
     id: user.id,
     username: user.username,
   });
-
   const result: SignUpWithUsernameAndPasswordResult = {
     token,
     user,
   };
-
   return result;
 };
 
 export const logInWithUsernameAndPassword = async (parameters: {
   username: string;
   password: string;
-}): Promise<LogInWithUsernameAndPasswordResult> => {
+  }): Promise<LogInWithUsernameAndPasswordResult> => {
   const passwordHash = createPasswordHash({
     password: parameters.password,
   });
-
   const user = await prismaClient.user.findUnique({
     where: {
       username: parameters.username,
       password: passwordHash,
     },
   });
-
   if (!user) {
     throw LogInWtihUsernameAndPasswordError.INCORRECT_USERNAME_OR_PASSWORD;
   }
@@ -66,7 +57,6 @@ export const logInWithUsernameAndPassword = async (parameters: {
     id: user.id,
     username: user.username,
   });
-
   return {
     token,
     user,
@@ -79,11 +69,9 @@ const createJWToken = (parameters: { id: string; username: string }): string => 
     sub: parameters.id,
     username: parameters.username,
   };
-
   const token = jwt.sign(jwtPayload, jwtSecretKey, {
     expiresIn: "30d",
   });
-
   return token;
 };
 
@@ -93,11 +81,9 @@ const checkIfUserExistsAlready = async (parameters: { username: string }): Promi
       username: parameters.username,
     },
   });
-
   if (existingUser) {
     return true;
   }
-
   return false;
 };
 
