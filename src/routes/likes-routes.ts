@@ -67,7 +67,6 @@ likesRoutes.delete("/on/:postId", tokenMiddleware, async (c) => {
         if (e === DeleteLikeError.NOT_FOUND) {
             return c.json({ message: "Like not found" }, 404);
         }
-
         return c.json({ message: DeleteLikeError.INTERNAL_SERVER_ERROR }, 500);
     }
 });
