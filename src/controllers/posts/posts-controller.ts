@@ -1,10 +1,5 @@
 import { prismaClient } from "../../extras/prisma";
-import { type CreatePostParameters, 
-  type CreatePostResult,   CreatePostError,
-  type GetPostsResult,
-  GetPostsError,
-  DeletePostError
-} from "./posts-types";
+import { type CreatePostParameters, type CreatePostResult, CreatePostError, type GetPostsResult, GetPostsError, DeletePostError } from "./posts-types";
 
 
 export const createPost = async (
@@ -30,7 +25,8 @@ export const getAllPosts = async (
   limit: number = 10
 ): Promise<GetPostsResult> => {
   try {
-    const skip = (page - 1) * limit;    const posts = await prismaClient.post.findMany({
+    const skip = (page - 1) * limit;    
+    const posts = await prismaClient.post.findMany({
       orderBy: { createdAt: "desc" },
       skip,
       take: limit,
@@ -52,13 +48,16 @@ export const getAllPosts = async (
     console.error("Error fetching posts:", error);
     throw GetPostsError.UNKNOWN;
   }
-};export const getUserPosts = async (
+};
+
+export const getUserPosts = async (
   userId: string,
   page: number = 1,
   limit: number = 10
 ): Promise<GetPostsResult> => {
   try {
-    const skip = (page - 1) * limit;    const posts = await prismaClient.post.findMany({
+    const skip = (page - 1) * limit;    
+    const posts = await prismaClient.post.findMany({
       where: { authorId: userId },
       orderBy: { createdAt: "desc" },
       skip,
@@ -71,9 +70,11 @@ export const getAllPosts = async (
           }
         }
       }
-    });    const totalPosts = await prismaClient.post.count({
+    });    
+    const totalPosts = await prismaClient.post.count({
       where: { authorId: userId }
-    });    return {
+    });    
+    return {
       posts,
       totalPosts,
       totalPages: Math.ceil(totalPosts / limit),
@@ -83,11 +84,12 @@ export const getAllPosts = async (
     console.error("Error fetching user posts:", error);
     throw GetPostsError.UNKNOWN;
   }
-};export const deletePost = async (
+};
+
+export const deletePost = async (
   postId: string,
   userId: string
 ): Promise<void> => {
-  // First, verify the post exists and belongs to the user
   const post = await prismaClient.post.findUnique({
     where: {
       id: postId,
@@ -95,7 +97,7 @@ export const getAllPosts = async (
     }
   });  if (!post) {
     throw DeletePostError.NOT_FOUND;
-  }  // Delete the post
+  }  
   try {
     await prismaClient.post.delete({
       where: { id: postId }
