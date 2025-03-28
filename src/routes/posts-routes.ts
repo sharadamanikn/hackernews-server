@@ -44,7 +44,8 @@ postsRoutes.get("", tokenMiddleware, async (context) => {
       500
     );
   }
-});// GET current user's posts
+});
+
 postsRoutes.get("/me", tokenMiddleware, async (context) => {
   try {
     const userId = context.get("userId");
@@ -77,11 +78,10 @@ postsRoutes.get("/me", tokenMiddleware, async (context) => {
 });
 
 
-// CREATE a post
 postsRoutes.post("", tokenMiddleware, async (context) => {
   try {
     const userId = context.get("userId");
-    const { title, content } = await context.req.json();    // Validate input
+    const { title, content } = await context.req.json();    
     if (!title || !content) {
       return context.json(
         {
@@ -89,17 +89,20 @@ postsRoutes.post("", tokenMiddleware, async (context) => {
         },
         400
       );
-    }    const result = await createPost({
+    }    
+    const result = await createPost({
       title,
       content,
       authorId: userId
-    });    return context.json(
+    });    
+    return context.json(
       {
         data: result.post,
       },
       201
     );
-  } catch (e) {
+  } 
+  catch (e) {
     if (e === CreatePostError.UNAUTHORIZED) {
       return context.json(
         {
@@ -114,17 +117,17 @@ postsRoutes.post("", tokenMiddleware, async (context) => {
       500
     );
   }
-});// DELETE a post
+});
+
+
 postsRoutes.delete("/:postId", tokenMiddleware, async (context) => {
   try {
     const userId = context.get("userId");
-    const postId = context.req.param("postId");    await deletePost(postId, userId);    return context.json(
-      {
-        message: "Post deleted successfully",
-      },
-      200
-    );
-  } catch (e) {
+    const postId = context.req.param("postId");    
+    await deletePost(postId, userId);    
+    return context.json({ message: "Post deleted successfully" }, 200 );
+  }
+  catch (e) {
     if (e === DeletePostError.NOT_FOUND) {
       return context.json(
         {
