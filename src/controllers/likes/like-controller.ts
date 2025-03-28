@@ -40,7 +40,7 @@ export const createLikeOnPost = async (parameters: { userId: string, postId: str
       take:pageSize,
     });
   
-const totalLikes = await prismaClient.like.count({where:{postId}});
+    const totalLikes = await prismaClient.like.count({where:{postId}});
   
     return { likes, totalLikes };
   };
