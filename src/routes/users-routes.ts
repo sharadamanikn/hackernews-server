@@ -40,20 +40,15 @@ usersRoutes.get("/me", tokenMiddleware, async (context) => {
 });
 
 
-// /users
 usersRoutes.get("", tokenMiddleware, async (context) => {
     try {
         const url = new URL(context.req.url); // Get query parameters
         const page = parseInt(url.searchParams.get("page") || "1", 10);
         const pageSize = parseInt(url.searchParams.get("pageSize") || "10", 10);
-    
         if (page < 1 || pageSize < 1) {
           return context.json({ message: "Invalid page or pageSize" }, 400);
         }
-        
-    
         const result = await getAllUsers(page, pageSize);
-    
         return context.json(
           {
             data: result.users,
@@ -66,7 +61,8 @@ usersRoutes.get("", tokenMiddleware, async (context) => {
           },
           200
         );
-      } catch (e) {
+      } 
+      catch (e) {
         console.error("Error fetching users:", e);
         return context.json({ message: "Internal Server Error" }, 500);
       }
