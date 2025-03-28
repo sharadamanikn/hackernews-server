@@ -50,11 +50,14 @@ postsRoutes.get("/me", tokenMiddleware, async (context) => {
   try {
     const userId = context.get("userId");
     const page = parseInt(context.req.query("page") || "1", 10);
-    const limit = parseInt(context.req.query("limit") || "10", 10);    if (page < 1 || limit < 1) {
+    const limit = parseInt(context.req.query("limit") || "10", 10);    
+    if (page < 1 || limit < 1) {
       return context.json({
         message: "Invalid page or limit"
       }, 400);
-    }    const posts = await getUserPosts(userId, page, limit);    return context.json(
+    }    
+    const posts = await getUserPosts(userId, page, limit);    
+    return context.json(
       {
         data: posts,
       },
