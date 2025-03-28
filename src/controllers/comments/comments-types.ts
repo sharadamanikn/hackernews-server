@@ -21,3 +21,27 @@ export enum GetCommentError
     INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR",
     UNAUTHORIZED = "UNAUTHORIZED",
 }
+
+export type DeleteCommentResult = {
+    success?: boolean;
+    error?: DeleteCommentError;
+};
+export enum DeleteCommentError {
+    BAD_REQUEST = "BAD_REQUEST",
+    NOT_FOUND = "COMMENT_NOT_FOUND",
+    UNAUTHORIZED = "UNAUTHORIZED_ACTION",
+    INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR",
+    COMMENT_NOT_FOUND = "COMMENT_NOT_FOUND",
+}
+
+export enum UpdateCommentError {
+    BAD_REQUEST = "BAD_REQUEST",
+    NOT_FOUND = "COMMENT_NOT_FOUND",
+    UNAUTHORIZED = "UNAUTHORIZED_ACTION",
+    INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR"
+}
+
+export type UpdateCommentResult = {
+    success?: boolean;
+    error?: UpdateCommentError;
+};
