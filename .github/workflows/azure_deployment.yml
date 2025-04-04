@@ -9,36 +9,21 @@ env:
   AZURE_REGION: centralindia
   RESOURCE_GROUP: HackerNews
   CONTAINER_APPS_ENVIRONMENT: HackerNewsContainerAppsEnvironment
-  LOG_ANALYTICS_WORKSPACE: HackerNewsLogAnalyticsWorkspace
+  LOG_ANALYTICS_WORKSPACE: HackernewsLogAnalyticsWorkspace
   ACR_REGISTRY: hackernews1si21is046.azurecr.io # This has to be unique (at least the `erbium` bit)
   ACR_REPOSITORY_NAME: hackernews
   CONTAINER_APP_NAME: hackernews
   TARGET_PORT: 3000
-  
 
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
-    env:
-        JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        DIRECT_URL: ${{ secrets.DIRECT_URL }}
-
     steps:
       # AUTH + CODE
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Build image
-        run: |
-          docker build . \
-            --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} \
-            --build-arg JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
-            --build-arg DIRECT_URL=${{ secrets.DIRECT_URL }} \
-            -t myimage:latest
-
 
       - name: Azure Login
         uses: azure/login@v2
@@ -54,8 +39,8 @@ jobs:
             --output tsv 2>/dev/null || echo "")
 
           if [ -z "$RG_EXISTS" ]; then
-            echo " Resource group '${{ env.RESOURCE_GROUP }}' not found."
-            echo " Please create it manually first."
+            echo "❌ Resource group '${{ env.RESOURCE_GROUP }}' not found."
+            echo "👉 Please create it manually first."
             exit 1
           fi
 
@@ -164,5 +149,4 @@ jobs:
             --image "${{ env.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_NAME }}:${{ github.ref_name }}" \
             --registry-server "${{ env.ACR_REGISTRY }}" \
             --registry-username "${{ env.ACR_USERNAME }}" \
-            --registry-password "${{ env.ACR_PASSWORD }}" \
-            --env-vars DATABASE_URL=${{ secrets.DATABASE_URL }} DIRECT_URL=${{ secrets.DIRECT_URL }} JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}
+            --registry-password "${{ env.ACR_PASSWORD }}"
