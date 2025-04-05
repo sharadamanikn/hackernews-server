@@ -1,15 +1,15 @@
-import { serve } from '@hono/node-server'
-//import "dotenv/config";
+import { serve } from '@hono/node-server';
 import { allRoutes } from "./routes/routes";
+import openapiRoutes from './routes/routes';
+import { Hono } from 'hono';
+
+const app = new Hono();
+
+app.route('/', allRoutes);
+app.route('/', openapiRoutes);
 
 
-allRoutes.get("/info", (context) => {
-  return context.json({
-    message: "Hello World",
-  });
-});
 
-serve(allRoutes, (info) => {
+serve(app, (info) => {
   console.log(`Server is running @ http://localhost:${info.port}`);
 });
-
